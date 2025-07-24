@@ -1,5 +1,8 @@
 "use client"
 
+import type React from "react"
+import { WalletConnect } from "@/components/wallet-connect"
+
 import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -205,7 +208,9 @@ export default function TetrisGame() {
     })
   }, [])
 
-  const pauseGame = useCallback(() => {
+  const pauseGame = useCallback((e?: React.MouseEvent | React.TouchEvent) => {
+    e?.preventDefault()
+    e?.stopPropagation()
     setGameState((prev) => ({ ...prev, isPaused: !prev.isPaused }))
   }, [])
 
@@ -357,47 +362,57 @@ export default function TetrisGame() {
   // Keyboard controls
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Prevent default for game keys
+      if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", " ", "a", "s", "d", "w", "c", "p"].includes(e.key)) {
+        e.preventDefault()
+      }
+
       if (!gameState.isPlaying || gameState.gameOver) return
 
-      switch (e.key) {
-        case "ArrowLeft":
+      switch (e.key.toLowerCase()) {
+        case "arrowleft":
         case "a":
-          e.preventDefault()
           movePiece(-1, 0)
           break
-        case "ArrowRight":
+        case "arrowright":
         case "d":
-          e.preventDefault()
           movePiece(1, 0)
           break
-        case "ArrowDown":
+        case "arrowdown":
         case "s":
-          e.preventDefault()
           movePiece(0, 1)
           break
-        case "ArrowUp":
+        case "arrowup":
         case "w":
-          e.preventDefault()
           rotatePieceInGame()
           break
         case " ":
-          e.preventDefault()
           hardDrop()
           break
         case "c":
-          e.preventDefault()
           holdPiece()
           break
         case "p":
-          e.preventDefault()
           pauseGame()
           break
       }
     }
 
-    window.addEventListener("keydown", handleKeyPress)
-    return () => window.removeEventListener("keydown", handleKeyPress)
+    // Add both keydown and keyup listeners for better responsiveness
+    document.addEventListener("keydown", handleKeyPress)
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress)
+    }
   }, [gameState.isPlaying, gameState.gameOver, movePiece, rotatePieceInGame, hardDrop, holdPiece, pauseGame])
+
+  // Ensure the game can receive keyboard input
+  useEffect(() => {
+    // Focus the document when the game starts
+    if (gameState.isPlaying) {
+      document.body.focus()
+    }
+  }, [gameState.isPlaying])
 
   const renderBoard = () => {
     const displayBoard = gameState.board.map((row) => [...row])
@@ -439,7 +454,7 @@ export default function TetrisGame() {
         {row.map((cell, x) => (
           <div
             key={x}
-            className={`w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border border-gray-600 ${
+            className={`w-5 h-5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border border-gray-600 ${
               cell === 1
                 ? "bg-blue-500"
                 : cell === 2
@@ -469,20 +484,45 @@ export default function TetrisGame() {
   return (
     <div className="min-h-screen bg-gray-800 text-white p-2 sm:p-4 pb-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-8">Chuck Tetris</h1>
+        {/* Add wallet connection */}
+        <div className="mb-4">
+          <WalletConnect />
+        </div>
 
-        <div className="flex flex-col gap-4">
+        <h1 className="text-xl sm:text-4xl font-bold text-center mb-2 sm:mb-8">Advanced Tetris</h1>
+
+        <div className="flex flex-col gap-2 sm:gap-4">
           {/* Mobile Stats Bar */}
           <div className="flex justify-between items-center lg:hidden bg-gray-700 rounded-lg p-2 mx-auto max-w-sm">
             <div className="text-sm font-semibold">Score: {gameState.score.toLocaleString()}</div>
             <div className="flex gap-2">
               {!gameState.isPlaying ? (
-                <Button onClick={startGame} size="sm">
+                <Button
+                  onClick={startGame}
+                  size="sm"
+                  className="min-w-[80px] touch-manipulation"
+                  onTouchStart={(e) => e.preventDefault()}
+                >
                   {gameState.gameOver ? "New Game" : "Start"}
                 </Button>
               ) : (
-                <Button onClick={pauseGame} size="sm">
-                  {gameState.isPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
+                <Button
+                  onClick={pauseGame}
+                  onTouchStart={pauseGame}
+                  size="sm"
+                  className="min-w-[80px] touch-manipulation bg-blue-600 hover:bg-blue-700"
+                >
+                  {gameState.isPaused ? (
+                    <>
+                      <Play className="w-4 h-4 mr-1" />
+                      Resume
+                    </>
+                  ) : (
+                    <>
+                      <Pause className="w-4 h-4 mr-1" />
+                      Pause
+                    </>
+                  )}
                 </Button>
               )}
             </div>
@@ -517,42 +557,42 @@ export default function TetrisGame() {
 
             {/* Game Board */}
             <div className="flex flex-col items-center w-full">
-              <div className="bg-gray-900 p-2 sm:p-4 border-2 border-gray-600 mb-2 overflow-visible mx-auto">
-                <div className="transform scale-110 sm:scale-100 lg:scale-100 origin-top">{renderBoard()}</div>
+              <div className="bg-gray-900 p-1 sm:p-4 border-2 border-gray-600 mb-1 overflow-visible mx-auto">
+                <div className="transform scale-95 sm:scale-100 lg:scale-100 origin-top">{renderBoard()}</div>
               </div>
 
               {/* Mobile Controls */}
-              <div className="lg:hidden w-full max-w-sm mx-auto mt-2">
+              <div className="lg:hidden w-full max-w-sm mx-auto mt-1">
                 {/* Top row - Hold and Rotate */}
-                <div className="flex justify-between mb-3">
+                <div className="flex justify-between mb-2">
                   <Button
                     size="sm"
                     onClick={holdPiece}
                     disabled={!gameState.canHold || !gameState.isPlaying}
-                    className="px-4 py-3 text-sm"
+                    className="px-3 py-2 text-sm touch-manipulation"
                   >
                     Hold
                   </Button>
-                  <Button size="sm" onClick={rotatePieceInGame} className="px-6 py-3">
-                    <RotateCw className="w-5 h-5" />
+                  <Button size="sm" onClick={rotatePieceInGame} className="px-4 py-2 touch-manipulation">
+                    <RotateCw className="w-4 h-4" />
                   </Button>
-                  <Button size="sm" onClick={hardDrop} className="px-4 py-3 text-sm">
+                  <Button size="sm" onClick={hardDrop} className="px-3 py-2 text-sm touch-manipulation">
                     Drop
                   </Button>
                 </div>
 
                 {/* Movement controls */}
-                <div className="flex justify-center items-center gap-3">
-                  <Button size="sm" onClick={() => movePiece(-1, 0)} className="px-6 py-4">
-                    <ArrowLeft className="w-6 h-6" />
+                <div className="flex justify-center items-center gap-2">
+                  <Button size="sm" onClick={() => movePiece(-1, 0)} className="px-4 py-3 touch-manipulation">
+                    <ArrowLeft className="w-5 h-5" />
                   </Button>
                   <div className="flex flex-col gap-1">
-                    <Button size="sm" onClick={() => movePiece(0, 1)} className="px-6 py-3">
-                      <ArrowDown className="w-6 h-6" />
+                    <Button size="sm" onClick={() => movePiece(0, 1)} className="px-4 py-2 touch-manipulation">
+                      <ArrowDown className="w-5 h-5" />
                     </Button>
                   </div>
-                  <Button size="sm" onClick={() => movePiece(1, 0)} className="px-6 py-4">
-                    <ArrowRight className="w-6 h-6" />
+                  <Button size="sm" onClick={() => movePiece(1, 0)} className="px-4 py-3 touch-manipulation">
+                    <ArrowRight className="w-5 h-5" />
                   </Button>
                 </div>
               </div>
@@ -582,18 +622,27 @@ export default function TetrisGame() {
 
               <div className="flex flex-col gap-2">
                 {!gameState.isPlaying ? (
-                  <Button onClick={startGame} className="w-full">
-                    {gameState.gameOver ? "New Game" : "Start Game"}
+                  <Button onClick={startGame} className="w-full text-lg py-3">
+                    {gameState.gameOver ? "🎮 New Game" : "🎮 Start Game"}
                   </Button>
                 ) : (
                   <Button onClick={pauseGame} className="w-full">
-                    {gameState.isPaused ? <Play className="w-4 h-4 mr-2" /> : <Pause className="w-4 h-4 mr-2" />}
-                    {gameState.isPaused ? "Resume" : "Pause"}
+                    {gameState.isPaused ? (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        Resume Game
+                      </>
+                    ) : (
+                      <>
+                        <Pause className="w-4 h-4 mr-2" />
+                        Pause Game
+                      </>
+                    )}
                   </Button>
                 )}
 
                 <Button onClick={holdPiece} disabled={!gameState.canHold || !gameState.isPlaying} className="w-full">
-                  Hold Piece
+                  Hold Piece (C)
                 </Button>
               </div>
             </div>
