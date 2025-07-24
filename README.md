@@ -2,7 +2,7 @@
 
 A modern, feature-rich Tetris game built with Next.js, TypeScript, and Tailwind CSS. Experience the classic puzzle game with smooth animations, responsive design, and advanced gameplay features.
 
-![Tetris Game Screenshot](https://via.placeholder.com/800x600?text=Advanced+Tetris+Game)
+![Live Demo](https://via.placeholder.com/800x600?text=Advanced+Tetris+Game)
 
 ## 🎮 Features
 

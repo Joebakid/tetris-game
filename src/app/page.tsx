@@ -183,7 +183,7 @@ export default function TetrisGame() {
     gameOver: false,
   })
 
-  const gameLoopRef = useRef<NodeJS.Timeout>()
+  const gameLoopRef = useRef<NodeJS.Timeout | null>(null)
   const dropTimeRef = useRef(1000)
 
   const startGame = useCallback(() => {
