@@ -1,0 +1,17 @@
+{
+  "name": "Advanced Tetris",
+  "description": "An advanced Tetris game with Web3 wallet integration on Base",
+  "version": "1.0.0",
+  "icon": "/tetris-icon.png",
+  "screenshots": ["/tetris-screenshot.png"],
+  "categories": ["games", "entertainment"],
+  "author": "Dogeman [JOSEPH BAWO]",
+  "website": "https://tetris-chuck.vercel.app/",
+  "repository": "https://github.com/Joebakid/tetris-game?tab=readme-ov-file",
+  "license": "MIT",
+  "base": {
+    "network": "base",
+    "features": ["wallet-connect", "gaming"],
+    "permissions": ["wallet"]
+  }
+}
