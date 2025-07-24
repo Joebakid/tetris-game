@@ -439,7 +439,7 @@ export default function TetrisGame() {
         {row.map((cell, x) => (
           <div
             key={x}
-            className={`w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border border-gray-600 ${
+            className={`w-6 h-6 sm:w-5 sm:h-5 lg:w-6 lg:h-6 border border-gray-600 ${
               cell === 1
                 ? "bg-blue-500"
                 : cell === 2
@@ -473,7 +473,7 @@ export default function TetrisGame() {
 
         <div className="flex flex-col gap-4">
           {/* Mobile Stats Bar */}
-          <div className="flex justify-between items-center lg:hidden bg-gray-700 rounded-lg p-3">
+          <div className="flex justify-between items-center lg:hidden bg-gray-700 rounded-lg p-3 mx-auto max-w-sm">
             <div className="text-sm font-semibold">Score: {gameState.score.toLocaleString()}</div>
             <div className="flex gap-2">
               {!gameState.isPlaying ? (
@@ -516,43 +516,45 @@ export default function TetrisGame() {
             </div>
 
             {/* Game Board */}
-            <div className="flex flex-col items-center">
-              <div className="bg-gray-900 p-2 sm:p-4 border-2 border-gray-600 mb-4 overflow-hidden">
-                <div className="transform scale-90 sm:scale-100 lg:scale-100 origin-top">{renderBoard()}</div>
+            <div className="flex flex-col items-center w-full">
+              <div className="bg-gray-900 p-2 sm:p-4 border-2 border-gray-600 mb-4 overflow-hidden mx-auto">
+                <div className="transform scale-125 sm:scale-100 lg:scale-100 origin-center lg:origin-top">
+                  {renderBoard()}
+                </div>
               </div>
 
               {/* Mobile Controls */}
-              <div className="lg:hidden w-full max-w-xs mx-auto">
+              <div className="lg:hidden w-full max-w-sm mx-auto">
                 {/* Top row - Hold and Rotate */}
                 <div className="flex justify-between mb-3">
                   <Button
                     size="sm"
                     onClick={holdPiece}
                     disabled={!gameState.canHold || !gameState.isPlaying}
-                    className="px-3 py-2 text-xs"
+                    className="px-4 py-3 text-sm"
                   >
                     Hold
                   </Button>
-                  <Button size="sm" onClick={rotatePieceInGame} className="px-4 py-2">
-                    <RotateCw className="w-4 h-4" />
+                  <Button size="sm" onClick={rotatePieceInGame} className="px-6 py-3">
+                    <RotateCw className="w-5 h-5" />
                   </Button>
-                  <Button size="sm" onClick={hardDrop} className="px-3 py-2 text-xs">
+                  <Button size="sm" onClick={hardDrop} className="px-4 py-3 text-sm">
                     Drop
                   </Button>
                 </div>
 
                 {/* Movement controls */}
-                <div className="flex justify-center items-center gap-2">
-                  <Button size="sm" onClick={() => movePiece(-1, 0)} className="px-4 py-3">
-                    <ArrowLeft className="w-5 h-5" />
+                <div className="flex justify-center items-center gap-3">
+                  <Button size="sm" onClick={() => movePiece(-1, 0)} className="px-6 py-4">
+                    <ArrowLeft className="w-6 h-6" />
                   </Button>
                   <div className="flex flex-col gap-1">
-                    <Button size="sm" onClick={() => movePiece(0, 1)} className="px-4 py-2">
-                      <ArrowDown className="w-5 h-5" />
+                    <Button size="sm" onClick={() => movePiece(0, 1)} className="px-6 py-3">
+                      <ArrowDown className="w-6 h-6" />
                     </Button>
                   </div>
-                  <Button size="sm" onClick={() => movePiece(1, 0)} className="px-4 py-3">
-                    <ArrowRight className="w-5 h-5" />
+                  <Button size="sm" onClick={() => movePiece(1, 0)} className="px-6 py-4">
+                    <ArrowRight className="w-6 h-6" />
                   </Button>
                 </div>
               </div>
