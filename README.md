@@ -2,7 +2,7 @@
 
 A modern, feature-rich Tetris game built with Next.js, TypeScript, and Tailwind CSS. Experience the classic puzzle game with smooth animations, responsive design, and advanced gameplay features.
 
-![Live Demo](https://tetris-game-19sr.vercel.app/)
+[Live Demo](https://tetris-game-19sr.vercel.app/)
 
 ## 🎮 Features
 
@@ -38,8 +38,8 @@ A modern, feature-rich Tetris game built with Next.js, TypeScript, and Tailwind 
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/advanced-tetris.git
-cd advanced-tetris
+git clone https://github.com/Joebakid/tetris-game
+cd tetris-game
 ```
 
 2. **Install dependencies**

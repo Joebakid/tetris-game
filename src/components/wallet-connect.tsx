@@ -42,7 +42,7 @@ export const WalletConnect = () => {
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span className="text-green-400">Connected: {formatAddress(address)}</span>
         </div>
-        <Button onClick={() => disconnect()} size="sm" variant="outline">
+        <Button className="transition-all  duration-500 ease-in-out   hover:opacity-100 bg-green-400" onClick={() => disconnect()} size="sm" variant="outline">
           Disconnect
         </Button>
       </div>
@@ -55,7 +55,7 @@ export const WalletConnect = () => {
         onClick={handleConnect}
         size="sm"
         disabled={isPending || isConnecting}
-        className="bg-blue-600 hover:bg-blue-700"
+        className="bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white border-purple-600 hover:border-purple-700"
       >
         {isPending || isConnecting ? "Connecting..." : "Connect Wallet"}
       </Button>
