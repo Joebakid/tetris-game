@@ -2,7 +2,7 @@
 
 A modern, feature-rich Tetris game built with Next.js, TypeScript, and Tailwind CSS. Experience the classic puzzle game with smooth animations, responsive design, and advanced gameplay features.
 
-[Live Demo](https://tetris-game-19sr.vercel.app/)
+[Live Demo](https://tetris-chuck.vercel.app/)
 
 ## 🎮 Features
 

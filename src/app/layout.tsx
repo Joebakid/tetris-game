@@ -7,7 +7,7 @@ import { Providers } from "./providers"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Advanced Tetris - Base Mini App",
+  title: " Chuck tetris - Base Mini App",
   description: "An advanced Tetris game with Web3 wallet integration on Base",
   manifest: "/manifest.json",
   icons: {

@@ -489,7 +489,7 @@ export default function TetrisGame() {
           <WalletConnect />
         </div>
 
-        <h1 className="text-xl sm:text-4xl font-bold text-center mb-2 sm:mb-8">Advanced Tetris</h1>
+        <h1 className="text-xl sm:text-4xl font-bold text-center mb-2 sm:mb-8">  Tetris</h1>
 
         <div className="flex flex-col gap-2 sm:gap-4">
           {/* Mobile Stats Bar */}
