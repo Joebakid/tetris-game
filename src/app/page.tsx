@@ -467,13 +467,13 @@ export default function TetrisGame() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white p-2 sm:p-4">
+    <div className="min-h-screen bg-gray-800 text-white p-2 sm:p-4 pb-6">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-8">Advanced Tetris</h1>
 
         <div className="flex flex-col gap-4">
           {/* Mobile Stats Bar */}
-          <div className="flex justify-between items-center lg:hidden bg-gray-700 rounded-lg p-3 mx-auto max-w-sm">
+          <div className="flex justify-between items-center lg:hidden bg-gray-700 rounded-lg p-2 mx-auto max-w-sm">
             <div className="text-sm font-semibold">Score: {gameState.score.toLocaleString()}</div>
             <div className="flex gap-2">
               {!gameState.isPlaying ? (
@@ -517,14 +517,12 @@ export default function TetrisGame() {
 
             {/* Game Board */}
             <div className="flex flex-col items-center w-full">
-              <div className="bg-gray-900 p-2 sm:p-4 border-2 border-gray-600 mb-4 overflow-hidden mx-auto">
-                <div className="transform scale-125 sm:scale-100 lg:scale-100 origin-center lg:origin-top">
-                  {renderBoard()}
-                </div>
+              <div className="bg-gray-900 p-2 sm:p-4 border-2 border-gray-600 mb-2 overflow-visible mx-auto">
+                <div className="transform scale-110 sm:scale-100 lg:scale-100 origin-top">{renderBoard()}</div>
               </div>
 
               {/* Mobile Controls */}
-              <div className="lg:hidden w-full max-w-sm mx-auto">
+              <div className="lg:hidden w-full max-w-sm mx-auto mt-2">
                 {/* Top row - Hold and Rotate */}
                 <div className="flex justify-between mb-3">
                   <Button
