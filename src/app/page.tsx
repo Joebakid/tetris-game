@@ -469,7 +469,7 @@ export default function TetrisGame() {
   return (
     <div className="min-h-screen bg-gray-800 text-white p-2 sm:p-4 pb-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-8">Advanced Tetris</h1>
+        <h1 className="text-2xl sm:text-4xl font-bold text-center mb-4 sm:mb-8">Chuck Tetris</h1>
 
         <div className="flex flex-col gap-4">
           {/* Mobile Stats Bar */}
